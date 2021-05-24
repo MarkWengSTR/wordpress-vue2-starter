@@ -42,6 +42,10 @@ class VuePlugin
         $vueDirectory    = plugin_dir_url(__FILE__) . 'vue' . '/dist';
         wp_register_style( 'backend-vue-style', $vueDirectory . '/app.css' );
         wp_register_script( 'backend-vue-script', $vueDirectory . '/app.js', [], '1.0.0', true );
+
+        wp_localize_script( 'backend-vue-script', 'vueTestLocalizer', [
+            'wpPlugDir'  => plugin_dir_url(__FILE__),
+        ] );
     }
 
 }
