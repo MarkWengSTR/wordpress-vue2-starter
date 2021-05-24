@@ -1,4 +1,4 @@
-const devPort = 8080;
+const devPort = 8081;
 
 module.exports = {
   devServer: {

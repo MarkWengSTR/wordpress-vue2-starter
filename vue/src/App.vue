@@ -14,7 +14,9 @@ export default {
   name: "app",
   data() {
     return {
-      show: 2
+      show: 2,
+      // eslint-disable-next-line
+      logoUrl: vueTestLocalizer.vueUrl + "assets/logo.png"
     };
   },
   components: {

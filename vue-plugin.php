@@ -32,6 +32,7 @@ class VuePlugin
 
     public function load_vue_plugin_page() {
         wp_enqueue_style( 'backend-vue-style' );
+        wp_enqueue_style( 'backend-vue-img' );
         wp_enqueue_script( 'backend-vue-script' );
 
         // For a better overview we load page templates separately
@@ -41,10 +42,11 @@ class VuePlugin
     public function load_scripts() {
         $vueDirectory    = plugin_dir_url(__FILE__) . 'vue' . '/dist';
         wp_register_style( 'backend-vue-style', $vueDirectory . '/app.css' );
+        wp_register_style( 'backend-vue-img', $vueDirectory . '/img' );
         wp_register_script( 'backend-vue-script', $vueDirectory . '/app.js', [], '1.0.0', true );
 
         wp_localize_script( 'backend-vue-script', 'vueTestLocalizer', [
-            'wpPlugDir'  => plugin_dir_url(__FILE__),
+            'vueUrl'  => $vueDirectory,
         ] );
     }
 
