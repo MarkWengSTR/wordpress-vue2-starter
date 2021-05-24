@@ -39,7 +39,7 @@ class VuePlugin
     }
 
     public function load_scripts() {
-        $vueDirectory    = join( DIRECTORY_SEPARATOR, [ plugin_dir_url(__FILE__), 'vue', 'dist' ] );
+        $vueDirectory    = plugin_dir_url(__FILE__) . 'vue' . '/dist';
         wp_register_style( 'backend-vue-style', $vueDirectory . '/app.css' );
         wp_register_script( 'backend-vue-script', $vueDirectory . '/app.js', [], '1.0.0', true );
     }
