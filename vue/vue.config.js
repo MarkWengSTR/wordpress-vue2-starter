@@ -11,8 +11,9 @@ module.exports = {
   },
   publicPath:
     process.env.NODE_ENV === "production"
-      ? process.env.ASSET_PATH || "/"
+      ? "/my_website/wp-content/plugins/wordpress-vue2-starter/vue/dist/"
       : `http://localhost:${devPort}/`,
+  // ? process.env.ASSET_PATH || "/"
   configureWebpack: {
     output: {
       filename: "app.js",
