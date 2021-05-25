@@ -2,16 +2,11 @@ import Vue from "vue";
 import App from "./App.vue";
 import store from "./store";
 import VueRouter from "vue-router";
+import Page1 from "@/components/pages/page1.vue";
+import Page2 from "@/components/pages/page2.vue";
 
 Vue.config.productionTip = false;
 Vue.use(VueRouter);
-
-const Page1 = {
-  template: `<div>Page1</div>`
-};
-const Page2 = {
-  template: `<div>Page2</div>`
-};
 
 const router = new VueRouter({
   routes: [
