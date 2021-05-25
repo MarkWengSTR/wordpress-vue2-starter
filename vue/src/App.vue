@@ -1,8 +1,11 @@
 <template>
   <div id="app">
     <img alt="Vue logo" src="@/assets/logo.png" />
-    <router-link to="/page1">Page1</router-link>
-    <router-link to="/page2">Page2</router-link>
+    <div>
+      <router-link to="/">Index</router-link>
+      <router-link to="/page1">Page1</router-link>
+      <router-link to="/page2">Page2</router-link>
+    </div>
     <router-view></router-view>
     <HelloWorld msg="Welcome to Your  Vue.js App" />
   </div>
@@ -32,5 +35,10 @@ export default {
   text-align: center;
   color: #2c3e50;
   margin-top: 60px;
+}
+
+.router-link-exact-active {
+  background-color: black;
+  color: white;
 }
 </style>

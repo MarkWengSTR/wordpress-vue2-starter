@@ -2,16 +2,13 @@ import Vue from "vue";
 import App from "./App.vue";
 import store from "./store";
 import VueRouter from "vue-router";
+import Page1 from "@/components/pages/page1.vue";
+import Page2 from "@/components/pages/page2.vue";
+import User from "@/components/pages/user.vue";
+import ErrorPage from "@/components/pages/errorPage.vue";
 
 Vue.config.productionTip = false;
 Vue.use(VueRouter);
-
-const Page1 = {
-  template: `<div>Page1</div>`
-};
-const Page2 = {
-  template: `<div>Page2</div>`
-};
 
 const router = new VueRouter({
   routes: [
@@ -22,6 +19,18 @@ const router = new VueRouter({
     {
       path: "/page2",
       component: Page2
+    },
+    {
+      path: "/user/:id(\\d+)",
+      component: User
+    },
+    {
+      path: "/404",
+      component: ErrorPage
+    },
+    {
+      path: "*",
+      redirect: "/404"
     }
   ]
 });
