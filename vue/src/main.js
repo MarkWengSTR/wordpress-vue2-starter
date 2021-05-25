@@ -25,6 +25,10 @@ const router = new VueRouter({
       component: User
     },
     {
+      path: "/user/profile/:id(\\d+)",
+      component: User
+    },
+    {
       path: "/404",
       component: ErrorPage
     },

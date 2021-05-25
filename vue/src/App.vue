@@ -5,6 +5,8 @@
       <router-link to="/">Index</router-link>
       <router-link to="/page1">Page1</router-link>
       <router-link to="/page2">Page2</router-link>
+      <router-link to="/user/123">User 123</router-link>
+      <router-link to="/user/profile/456">User Profile 456</router-link>
     </div>
     <router-view></router-view>
     <HelloWorld msg="Welcome to Your  Vue.js App" />
