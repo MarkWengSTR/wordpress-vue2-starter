@@ -1,8 +1,9 @@
 <template>
   <div id="app">
     <img alt="Vue logo" src="@/assets/logo.png" />
-    <div v-if="show === 1">Page1</div>
-    <div v-if="show === 2">Page2</div>
+    <router-link to="/page1">Page1</router-link>
+    <router-link to="/page2">Page2</router-link>
+    <router-view></router-view>
     <HelloWorld msg="Welcome to Your  Vue.js App" />
   </div>
 </template>
@@ -14,9 +15,7 @@ export default {
   name: "app",
   data() {
     return {
-      show: 2,
-      // eslint-disable-next-line
-      logoUrl: vueTestLocalizer.vueUrl + "assets/logo.png"
+      show: 2
     };
   },
   components: {

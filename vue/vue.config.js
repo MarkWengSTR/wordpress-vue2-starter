@@ -1,6 +1,7 @@
 const devPort = 8081;
 
 module.exports = {
+  runtimeCompiler: true,
   devServer: {
     hot: true,
     writeToDisk: true,
@@ -11,7 +12,7 @@ module.exports = {
   },
   publicPath:
     process.env.NODE_ENV === "production"
-      ? "/my_website/wp-content/plugins/wordpress-vue2-starter/vue/dist/"
+      ? "/sandbox/wp-content/plugins/wordpress-vue2-starter/vue/dist/"
       : `http://localhost:${devPort}/`,
   // ? process.env.ASSET_PATH || "/"
   configureWebpack: {
