@@ -15,6 +15,8 @@
       <b-button variant="outline-primary" to="/page2">Page2</b-button>
     </div>
     <router-view></router-view>
+    <font-awesome-icon icon="user-secret" />
+    <font-awesome-icon :icon="['fas', 'spinner']" spin />
     <HelloWorld msg="Welcome to Your  Vue.js App" />
   </div>
 </template>
