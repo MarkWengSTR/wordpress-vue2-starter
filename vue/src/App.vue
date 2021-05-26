@@ -9,38 +9,79 @@
         </div>
       </div>
     </div>
-    <img alt="Vue logo" src="@/assets/logo.png" />
-    <div>
-      <b-button variant="outline-primary" to="/page1">Page1</b-button>
-      <b-button variant="outline-primary" to="/page2">Page2</b-button>
+    <div class="container">
+      <div class="row mt-3">
+        <div class="col-lg-6">
+          <h3 class="text-info">Registered Users</h3>
+        </div>
+        <div class="col-lg-6">
+          <button class="btn btn-info float-right">
+            <i class="fas fa-user" />
+            &nbsp;&nbsp;Add New User
+          </button>
+        </div>
+      </div>
+      <hr class="bg-info" />
+      <div class="alert alert-danger" v-if="errorMsg">
+        Error Message
+      </div>
+      <div class="alert alert-success" v-if="successMsg">
+        Success Message
+      </div>
+
+      <!-- Displaying Records -->
+      <div class="row">
+        <div class="col-lg-12">
+          <table class="table table-bordered table-striped">
+            <thead>
+              <tr class="text-center bg-info text-light">
+                <th>ID</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Phone</th>
+                <th>Edit</th>
+                <th>Delete</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="text-center">
+                <td>1</td>
+                <td>wolfmania</td>
+                <td>wolfmania@gmail.com</td>
+                <td>4452366464</td>
+                <td>
+                  <a href="#" class="text-success">
+                    <i class="fas fa-edit"></i>
+                  </a>
+                </td>
+                <td>
+                  <a href="#" class="text-danger">
+                    <i class="fas fa-trash-alt"></i>
+                  </a>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
     </div>
-    <router-view></router-view>
-    <HelloWorld msg="Welcome to Your  Vue.js App" />
   </div>
 </template>
 
 <script>
-import HelloWorld from "./components/HelloWorld.vue";
-
 export default {
   name: "app",
   data() {
     return {
-      show: 2
+      errorMsg: false,
+      successMsg: false
     };
-  },
-  components: {
-    HelloWorld
   }
 };
 </script>
 
-<style lang="scss">
-#app {
-  font-family: "Avenir", Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
+<style>
+.fa {
+  fone-family: FontAwsome;
 }
 </style>
