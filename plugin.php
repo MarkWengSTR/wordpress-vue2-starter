@@ -20,10 +20,10 @@ class Main
 
     public function add_admin_menu() {
         add_menu_page(
-            'Vue Plugin Example',
-            'Vue Plugin',
+            'Customers',
+            'Customers',
             'manage_options',
-            'vue-plugin',
+            'customer',
             [ $this, 'load_vue_plugin_page' ],
             'dashicons-smiley',
             4
@@ -45,11 +45,12 @@ class Main
         wp_register_style( 'backend-vue-img', $vueDirectory . '/img' );
         wp_register_script( 'backend-vue-script', $vueDirectory . '/app.js', [], '1.0.0', true );
 
-        wp_localize_script( 'backend-vue-script', 'vueTestLocalizer', [
-            'vueUrl'  => $vueDirectory,
+        wp_localize_script( 'backend-vue-script', 'wpBackendUrls', [
+            'adminUrl'  => admin_url( '/'  ),
+            'ajaxUrl'   => admin_url( 'admin-ajax.php'  ),
+            'apiUrl'    => home_url( '/wp-json'  )
         ] );
     }
-
 }
 
 new Main();
