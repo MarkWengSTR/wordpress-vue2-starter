@@ -6,7 +6,7 @@ Description: Vue Hot Reloading inside of WordPress.
 Version: 1.0.0
 */
 
-class VuePlugin
+class Main
 {
     public function __construct() {
         $this->register_hooks();
@@ -52,4 +52,4 @@ class VuePlugin
 
 }
 
-new VuePlugin();
+new Main();

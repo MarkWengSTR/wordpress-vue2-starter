@@ -1,0 +1,16 @@
+{
+    "name": "mark/curtains",
+    "description": "curtains erp",
+    "authors": [
+        {
+            "name": "Mark",
+            "email": "bskin0330@gmail.com"
+        }
+    ],
+    "require": {},
+    "autoload": {
+        "psr-4": {
+            "MWPCurains\\Api\\": "api/"
+        }
+    }
+}

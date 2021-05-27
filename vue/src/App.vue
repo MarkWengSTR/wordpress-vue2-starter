@@ -13,12 +13,12 @@
       <div class="row mt-3">
         <div class="col-lg-6">
           <h3 class="text-info">
-            Registered Users
+            Registered Customers
           </h3>
         </div>
         <div class="col-lg-6">
           <button class="btn btn-info float-right" @click="showAddModal = true">
-            <font-awesome-icon icon="user" /> &nbsp;&nbsp;Add New User
+            <font-awesome-icon icon="user" /> &nbsp;&nbsp;Add New Customer
           </button>
         </div>
       </div>
@@ -74,12 +74,12 @@
         </div>
       </div>
 
-      <!-- add New User Model -->
+      <!-- add New Customer Model -->
       <div id="overlay" v-if="showAddModal">
         <div class="modal-dialog">
           <div class="modal-content">
             <div class="modal-header">
-              <h5 class="modal-title">Add New User</h5>
+              <h5 class="modal-title">Add New Customer</h5>
               <button type="button" class="close" @click="showAddModal = false">
                 <span aria-hidden="true">&times;</span>
               </button>
@@ -115,7 +115,7 @@
                     class="btn btn-info btn-block btn-lg"
                     @click="showAddModal = false"
                   >
-                    Add User
+                    Add Customer
                   </button>
                 </div>
               </form>
@@ -124,12 +124,12 @@
         </div>
       </div>
 
-      <!-- Edit User Model -->
+      <!-- Edit Customer Model -->
       <div id="overlay" v-if="showEditModal">
         <div class="modal-dialog">
           <div class="modal-content">
             <div class="modal-header">
-              <h5 class="modal-title">Edit User</h5>
+              <h5 class="modal-title">Edit Customer</h5>
               <button
                 type="button"
                 class="close"
@@ -169,7 +169,7 @@
                     class="btn btn-info btn-block btn-lg"
                     @click="showEditModal = false"
                   >
-                    Update User
+                    Update Customer
                   </button>
                 </div>
               </form>
@@ -178,12 +178,12 @@
         </div>
       </div>
 
-      <!-- Delete User Model -->
+      <!-- Delete Customer Model -->
       <div id="overlay" v-if="showDeleteModal">
         <div class="modal-dialog">
           <div class="modal-content">
             <div class="modal-header">
-              <h5 class="modal-title">Delete User</h5>
+              <h5 class="modal-title">Delete Customer</h5>
               <button
                 type="button"
                 class="close"
@@ -194,7 +194,7 @@
             </div>
             <div class="modal-body p-4">
               <h4 class="text-danger">
-                Are you sure want to Delete this user?
+                Are you sure want to Delete this customer?
               </h4>
               <h5>You are deleting 'Mark'</h5>
               <hr />
