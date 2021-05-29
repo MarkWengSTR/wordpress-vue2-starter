@@ -2,7 +2,7 @@
 namespace MWPCurains\Router;
 
 use WP_REST_Controller;
-/* use MWPCurains\Repository\Customer; */
+use MWPCurains\Repository;
 
 class Customer extends WP_REST_Controller {
     protected $namespace = 'MWPCurtains/v1';
@@ -28,8 +28,7 @@ class Customer extends WP_REST_Controller {
 
     public function get_customers ($request) {
         return rest_ensure_response(
-            ["test" => "test"]
-            /* ( new \Repository\Customer ) -> get_all_customers() */
+            ( new Repository\Customer ) -> get_all_customers()
         );
     }
 }
