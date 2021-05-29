@@ -6,14 +6,20 @@ Description: Vue Hot Reloading inside of WordPress.
 Version: 1.0.0
 */
 
-class Main
-{
+if( ! defined( 'ABSPATH' ) ) exit(); // No direct access allowed
+
+require_once 'vendor/autoload.php';
+
+use MWPCurains\Api\Router\Main_Router;
+
+class Main {
     public function __construct() {
         $this->register_hooks();
     }
 
     private function register_hooks() {
         // Register hook to add a menu to the admin page
+        //
         add_action('admin_menu', [ $this, 'add_admin_menu' ]);
         add_action('admin_enqueue_scripts', [ $this, 'load_scripts' ]);
     }
@@ -54,3 +60,4 @@ class Main
 }
 
 new Main();
+new Main_Router();
