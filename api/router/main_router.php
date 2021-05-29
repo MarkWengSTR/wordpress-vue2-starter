@@ -1,8 +1,8 @@
 <?php
-namespace MWPCurains\Api\Router;
+namespace MWPCurains\Router;
 
 use WP_REST_Controller;
-use MWPCurains\Api\Router\Customer;
+use MWPCurains\Router\Customer;
 
 /**
  * Rest API Handler

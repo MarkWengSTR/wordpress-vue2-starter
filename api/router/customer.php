@@ -1,18 +1,12 @@
 <?php
-namespace MWPCurains\Api\Router;
+namespace MWPCurains\Router;
 
 use WP_REST_Controller;
+/* use MWPCurains\Repository\Customer; */
 
-class Customer extends WP_REST_Controller
-{
-    protected $namespace;
-    protected $rest_base;
-
-    public function __construct()
-    {
-        $this->namespace = 'MWPCurtains/v1';
-        $this->rest_base = 'customers';
-    }
+class Customer extends WP_REST_Controller {
+    protected $namespace = 'MWPCurtains/v1';
+    protected $rest_base = 'customers';
 
     /**
      * Register customer Routes
@@ -34,11 +28,8 @@ class Customer extends WP_REST_Controller
 
     public function get_customers ($request) {
         return rest_ensure_response(
-            [
-                'name' => 'Mark',
-                'Email' => '124@gmail.com',
-                'Phone' => '2331353215',
-            ]
+            ["test" => "test"]
+            /* ( new \Repository\Customer ) -> get_all_customers() */
         );
     }
 }

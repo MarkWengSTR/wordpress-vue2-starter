@@ -10,7 +10,9 @@
     "require": {},
     "autoload": {
         "psr-4": {
-            "MWPCurains\\Api\\": "api/"
+            "MWPCurains\\Controller\\": "api/controller",
+            "MWPCurains\\Repository\\": "api/repository",
+            "MWPCurains\\Router\\": "api/router"
         }
     }
 }

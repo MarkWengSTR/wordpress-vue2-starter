@@ -10,7 +10,7 @@ if( ! defined( 'ABSPATH' ) ) exit(); // No direct access allowed
 
 require_once 'vendor/autoload.php';
 
-use MWPCurains\Api\Router\Main_Router;
+use MWPCurains\Router\Main_Router;
 
 class Main {
     public function __construct() {
