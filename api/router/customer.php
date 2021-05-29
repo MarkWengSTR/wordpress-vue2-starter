@@ -28,7 +28,7 @@ class Customer extends WP_REST_Controller {
 
     public function get_customers ($request) {
         return rest_ensure_response(
-            ( new Repository\Customer ) -> get_all_customers()
+            ( new Repository\Customer ) -> find_all_customers()
         );
     }
 }

@@ -3,12 +3,22 @@
 namespace MWPCurains\Repository;
 
 class Customer {
-    public function get_all_customers() {
+    public function find_all_customers() {
         global $wpdb;
 
         return $wpdb->get_results(
-          "SELECT `ID`, `user_login`,  `user_nicename` FROM `{$wpdb->prefix}users`
-        ", OBJECT
+            " SELECT * FROM customers"
+            , OBJECT
+        );
+    }
+
+    public function find_customer_by_id($id) {
+        global $wpdb;
+
+        return $wpdb->get_results(
+            $wpdb->prepare(
+                " SELECT * FROM customers WHERE id = %d", $id
+            ), OBJECT
         );
     }
 }
