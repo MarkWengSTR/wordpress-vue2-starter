@@ -23,17 +23,22 @@ class Customer extends WP_REST_Controller {
             [
                 [
                     'methods'             => \WP_REST_Server::READABLE,
-                    'callback'            => [ $this, 'get_customers' ],
+                    'callback'            => [ $this, 'get_items' ],
                     'permission_callback' => '__return_true',
-                    'args'                => []
+                    'args'                => [ $this->get_collection_params() ]
                 ],
             ]
         );
     }
 
-    public function get_customers ($request) {
+    public function get_items ($request) {
+        /* Repository\Customer::find_all_customers() */
         return rest_ensure_response(
-            Repository\Customer::find_all_customers()
+            array_merge(Repository\Customer::find_customer_by_id($request['test']))
         );
+    }
+
+    public function get_collection_params(){
+
     }
 }
