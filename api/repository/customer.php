@@ -3,7 +3,7 @@
 namespace MWPCurains\Repository;
 
 class Customer {
-    public function find_all_customers() {
+    static function find_all_customers() {
         global $wpdb;
 
         return $wpdb->get_results(
@@ -12,7 +12,7 @@ class Customer {
         );
     }
 
-    public function find_customer_by_id($id) {
+    static function find_customer_by_id($id) {
         global $wpdb;
 
         return $wpdb->get_results(

@@ -1,13 +1,12 @@
 <?php
 namespace MWPCurains\Router;
 
-use WP_REST_Controller;
-use MWPCurains\Router\Customer;
+use MWPCurains\Controller\Customer;
 
 /**
  * Rest API Handler
  */
-class Main_Router extends WP_REST_Controller {
+class Main_Router {
 
     /**
      * Construct Function
@@ -20,7 +19,7 @@ class Main_Router extends WP_REST_Controller {
      * Register API routes
      */
     public function register_customer_routes() {
-        ( new Customer() )->register_customer_routes();
+        ( new Customer() )->register_routes();
     }
 
 }

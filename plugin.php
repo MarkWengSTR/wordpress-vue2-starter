@@ -20,7 +20,9 @@ class Main {
     private function register_hooks() {
         // Register hook to add a menu to the admin page
         //
-        add_action('admin_menu', [ $this, 'add_admin_menu' ]);
+        if ( is_admin() ) {
+            add_action('admin_menu', [ $this, 'add_admin_menu' ]);
+        }
         add_action('admin_enqueue_scripts', [ $this, 'load_scripts' ]);
     }
 
