@@ -54,9 +54,10 @@ class Main {
         wp_register_script( 'backend-vue-script', $vueDirectory . '/app.js', [], '1.0.0', true );
 
         wp_localize_script( 'backend-vue-script', 'wpBackendUrls', [
-            'adminUrl'  => admin_url( '/'  ),
-            'ajaxUrl'   => admin_url( 'admin-ajax.php'  ),
-            'apiUrl'    => home_url( '/wp-json'  )
+            'adminUrl'   => admin_url( '/'  ),
+            'ajaxUrl'    => admin_url( 'admin-ajax.php'  ),
+            'apiUrl'     => home_url( '/wp-json'  ),
+            'customeUrl' => home_url( '/wp-json/' .'MWPCurtains/v1' . '/' . 'customers' )
         ] );
     }
 }

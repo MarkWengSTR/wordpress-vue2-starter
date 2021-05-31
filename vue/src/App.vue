@@ -24,10 +24,10 @@
       </div>
       <hr class="bg-info" />
       <div class="alert alert-danger" v-if="errorMsg">
-        Error Message
+        {{ errorMsg }}
       </div>
       <div class="alert alert-success" v-if="successMsg">
-        Success Message
+        {{ successMsg }}
       </div>
 
       <!-- Display Records -->
@@ -45,11 +45,11 @@
               </tr>
             </thead>
             <tbody>
-              <tr class="text-center">
-                <td>1</td>
-                <td>Mark</td>
-                <td>123@gmail.com</td>
-                <td>153252366</td>
+              <tr class="text-center" v-for="user in users" :key="user.id">
+                <td>{{ user.id }}</td>
+                <td>{{ user.name }}</td>
+                <td>{{ user.email }}</td>
+                <td>{{ user.phone }}</td>
                 <td>
                   <a
                     class="text-success"
@@ -220,16 +220,36 @@
 </template>
 
 <script>
+import axios from "axios";
+
 export default {
   name: "app",
   data() {
     return {
-      errorMsg: false,
-      successMsg: false,
+      errorMsg: "",
+      successMsg: "",
       showAddModal: false,
       showEditModal: false,
-      showDeleteModal: false
+      showDeleteModal: false,
+      users: [],
+      newUser: { name: "", email: "", phone: "" },
+      currentUser: {}
     };
+  },
+  mounted() {
+    this.getAllUsers();
+  },
+  methods: {
+    getAllUsers() {
+      axios.get(wpBackendUrls.customeUrl) // eslint-disable-line
+        .then(response => {
+          if (response.data.error) {
+            this.errorMsg = response.data.message;
+          } else {
+            this.users = response.data;
+          }
+        });
+    }
   }
 };
 </script>

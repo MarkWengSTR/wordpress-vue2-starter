@@ -32,9 +32,9 @@ class Customer extends WP_REST_Controller {
     }
 
     public function get_items ($request) {
-        /* Repository\Customer::find_all_customers() */
         return rest_ensure_response(
-            array_merge(Repository\Customer::find_customer_by_id($request['test']))
+            Repository\Customer::find_all_customers()
+            /* array_merge(Repository\Customer::find_customer_by_id($request['test'])) */
         );
     }
 
