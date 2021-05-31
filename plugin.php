@@ -57,7 +57,10 @@ class Main {
             'adminUrl'   => admin_url( '/'  ),
             'ajaxUrl'    => admin_url( 'admin-ajax.php'  ),
             'apiUrl'     => home_url( '/wp-json'  ),
-            'customeUrl' => home_url( '/wp-json/' .'MWPCurtains/v1' . '/' . 'customers' )
+            'customer' => [
+                'all' => home_url( '/wp-json/' .'MWPCurtains/v1' . '/' . 'customers' ),
+                'create' => home_url( '/wp-json/' .'MWPCurtains/v1' . '/' . 'customer' ),
+            ]
         ] );
     }
 }

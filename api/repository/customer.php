@@ -21,4 +21,14 @@ class Customer {
             ), OBJECT
         );
     }
+
+    static function create_customer($to_create) {
+        global $wpdb;
+
+        $result = $wpdb->insert(
+            'customers', $to_create
+        );
+
+        return $result;
+    }
 }

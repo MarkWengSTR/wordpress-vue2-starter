@@ -92,6 +92,7 @@
                     type="text"
                     name="name"
                     placeholder="Name"
+                    v-model="newUser.name"
                   />
                 </div>
                 <div class="form-group">
@@ -100,6 +101,7 @@
                     type="email"
                     name="email"
                     placeholder="Email"
+                    v-model="newUser.email"
                   />
                 </div>
                 <div class="form-group">
@@ -108,12 +110,16 @@
                     type="tel"
                     name="phone"
                     placeholder="Phone"
+                    v-model="newUser.phone"
                   />
                 </div>
                 <div class="form-group">
                   <button
                     class="btn btn-info btn-block btn-lg"
-                    @click="showAddModal = false"
+                    @click="
+                      showAddModal = false;
+                      addUser();
+                    "
                   >
                     Add Customer
                   </button>
@@ -146,6 +152,7 @@
                     type="text"
                     name="name"
                     placeholder="Name"
+                    v-model="newUser.name"
                   />
                 </div>
                 <div class="form-group">
@@ -154,6 +161,7 @@
                     type="email"
                     name="email"
                     placeholder="Email"
+                    v-model="newUser.email"
                   />
                 </div>
                 <div class="form-group">
@@ -162,6 +170,7 @@
                     type="tel"
                     name="phone"
                     placeholder="Phone"
+                    v-model="newUser.phone"
                   />
                 </div>
                 <div class="form-group">
@@ -241,7 +250,7 @@ export default {
   },
   methods: {
     getAllUsers() {
-      axios.get(wpBackendUrls.customeUrl) // eslint-disable-line
+      axios.get(wpBackendUrls.customer.all) // eslint-disable-line
         .then(response => {
           if (response.data.error) {
             this.errorMsg = response.data.message;
@@ -249,6 +258,30 @@ export default {
             this.users = response.data;
           }
         });
+    },
+    addUser() {
+      var formData = this.toFormData(this.newUser);
+      const config = {
+        "Content-Type": "multipart/form-data",
+        timeout: 10000
+      };
+      axios.post(wpBackendUrls.customer.create, formData, config) // eslint-disable-line
+        .then(response => {
+          this.newUser = { name: "", email: "", phone: "" };
+
+          if (response.data.error) {
+            this.errorMsg = response.data.message;
+          } else {
+            this.successMsg = response.data.message;
+            this.getAllUsers();
+          }
+        });
+    },
+    toFormData(obj) {
+      return Object.keys(obj).reduce((formData, key) => {
+        formData.append(key, obj[key]);
+        return formData;
+      }, new FormData());
     }
   }
 };
