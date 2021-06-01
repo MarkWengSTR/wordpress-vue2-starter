@@ -2,6 +2,8 @@
 namespace MWPCurains\Controller;
 
 use WP_REST_Controller;
+use WP_REST_Response;
+use WP_Error;
 use MWPCurains\Repository;
 
 class Customer extends WP_REST_Controller {
@@ -15,7 +17,7 @@ class Customer extends WP_REST_Controller {
 
     public function register_routes() {
         /**
-         * Register customer Routes - Find All Customers
+         * Register customer Routes - Find All Customers & Create Customer
          */
         register_rest_route(
             $this->namespace,
@@ -23,23 +25,12 @@ class Customer extends WP_REST_Controller {
             [
                 [
                     'methods'             => \WP_REST_Server::READABLE,
-                    'callback'            => [ $this, 'find_all' ],
+                    'callback'            => [ $this, 'get_items' ],
                     'permission_callback' => '__return_true',
                 ],
-            ]
-        );
-
-
-        /**
-         * Register customer Routes - create item
-         */
-        register_rest_route(
-            $this->namespace,
-            '/' . $this->rest_base,
-            [
                 [
                     'methods'             => \WP_REST_Server::CREATABLE,
-                    'callback'            => [ $this, 'create_customer' ],
+                    'callback'            => [ $this, 'create_item' ],
                     'permission_callback' => '__return_true',
                     'args'                => [ $this->get_endpoint_args_for_item_schema(true) ]
                 ],
@@ -48,7 +39,7 @@ class Customer extends WP_REST_Controller {
 
 
         /**
-         * Register customer Routes - update item
+         * Register customer Routes - Find & Update & Delete
          */
         register_rest_route(
             $this->namespace,
@@ -56,34 +47,30 @@ class Customer extends WP_REST_Controller {
             [
                 [
                     'methods'             => \WP_REST_Server::READABLE,
-                    'callback'            => [ $this, 'get_customer' ],
+                    'callback'            => [ $this, 'get_item' ],
                     'permission_callback' => '__return_true',
                     'args'                => [ $this->get_collection_params() ]
                 ],
                 [
                     'methods'             => \WP_REST_Server::EDITABLE,
-                    'callback'            => [ $this, 'update_customer' ],
+                    'callback'            => [ $this, 'update_item' ],
                     'permission_callback' => '__return_true',
-                    'args'                => [ $this->get_endpoint_args_for_item_schema(true) ]
+                    'args'                => [ $this->get_collection_params() ]
                 ],
             ]
         );
     }
 
-    public function find_all ($request) {
-        return rest_ensure_response(
-            Repository\Customer::find_all_customers()
-        );
+    public function get_items ($request) {
+        return new WP_REST_Response( Repository\Customer::find_all_customers(), 200 );
     }
 
-    public function get_customer ($request) {
-        return rest_ensure_response(
-            Repository\Customer::find_customer_by_id($request['id'])
-        );
+    public function get_item ($request) {
+        return new WP_REST_Response( Repository\Customer::find_customer_by_id($request['id']), 200 );
     }
 
 
-    public function create_customer ($request) {
+    public function create_item ($request) {
         $to_create = [
             'name' => isset( $request['name'] ) ? sanitize_text_field( $request['name'] ) : '',
             'email' => isset( $request['email'] ) && is_email( $request['email'] ) ? sanitize_text_field( $request['email'] ) : '',
@@ -92,15 +79,25 @@ class Customer extends WP_REST_Controller {
 
         $result = Repository\Customer::create_customer($to_create);
 
-        return rest_ensure_response(
-            [
-                'response_code' => ( $result == 1 ) ? 200 : 500
-            ]
-        );
+        return ( $result == 1 ) ? ( new WP_REST_Response( $to_create, 200 ) ) : ( new WP_Error( 500, __( 'Not Creatable', 'text-domain' ) )) ;
     }
 
+    public function update_item ($request) {
+        if ( !isset( $request['id'] ) ) {
+            return rest_ensure_response(
+                ["message" => "id not provide, can not update"]
+            );
+        }
 
-    public function get_collection_params(){
+        $to_update = [
+            'id' => $request['id'],
+            'name' => isset( $request['name'] ) ? sanitize_text_field( $request['name'] ) : '',
+            'email' => isset( $request['email'] ) && is_email( $request['email'] ) ? sanitize_text_field( $request['email'] ) : '',
+            'phone' => isset( $request['phone'] ) ? sanitize_text_field( $request['phone'] ) : '',
+        ]; /* Fail if add more than table columns */
 
+        $result = Repository\Customer::update_customer($to_update);
+
+        return ( $result == 2 ) ? ( new WP_REST_Response( $to_update, 200 ) ) : ( new WP_Error( 500, __( 'Not Updatable', 'text-domain' ) )) ;
     }
 }

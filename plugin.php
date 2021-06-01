@@ -11,6 +11,7 @@ if( ! defined( 'ABSPATH' ) ) exit(); // No direct access allowed
 require_once 'vendor/autoload.php';
 
 use MWPCurains\Router\Main_Router;
+use MWPCurains\Router\Urls;
 
 class Main {
     public function __construct() {
@@ -52,16 +53,7 @@ class Main {
         wp_register_style( 'backend-vue-style', $vueDirectory . '/app.css' );
         wp_register_style( 'backend-vue-img', $vueDirectory . '/img' );
         wp_register_script( 'backend-vue-script', $vueDirectory . '/app.js', [], '1.0.0', true );
-
-        wp_localize_script( 'backend-vue-script', 'wpBackendUrls', [
-            'adminUrl'   => admin_url( '/'  ),
-            'ajaxUrl'    => admin_url( 'admin-ajax.php'  ),
-            'apiUrl'     => home_url( '/wp-json'  ),
-            'customer' => [
-                'all' => home_url( '/wp-json/' .'MWPCurtains/v1' . '/' . 'customers' ),
-                'create' => home_url( '/wp-json/' .'MWPCurtains/v1' . '/' . 'customer' ),
-            ]
-        ] );
+        Urls::send_url_to_frontend();
     }
 }
 

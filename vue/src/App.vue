@@ -54,7 +54,10 @@
                   <a
                     class="text-success"
                     href="#"
-                    @click="showEditModal = true"
+                    @click="
+                      showEditModal = true;
+                      selectUser(user);
+                    "
                   >
                     <font-awesome-icon icon="edit" />
                   </a>
@@ -117,8 +120,8 @@
                   <button
                     class="btn btn-info btn-block btn-lg"
                     @click="
-                      showAddModal = false;
                       addUser();
+                      showAddModal = false;
                     "
                   >
                     Add Customer
@@ -151,8 +154,7 @@
                     class="form-control form-control-lg"
                     type="text"
                     name="name"
-                    placeholder="Name"
-                    v-model="newUser.name"
+                    v-model="selectedUser.name"
                   />
                 </div>
                 <div class="form-group">
@@ -160,8 +162,7 @@
                     class="form-control form-control-lg"
                     type="email"
                     name="email"
-                    placeholder="Email"
-                    v-model="newUser.email"
+                    v-model="selectedUser.email"
                   />
                 </div>
                 <div class="form-group">
@@ -169,14 +170,16 @@
                     class="form-control form-control-lg"
                     type="tel"
                     name="phone"
-                    placeholder="Phone"
-                    v-model="newUser.phone"
+                    v-model="selectedUser.phone"
                   />
                 </div>
                 <div class="form-group">
                   <button
                     class="btn btn-info btn-block btn-lg"
-                    @click="showEditModal = false"
+                    @click="
+                      updateUser();
+                      showEditModal = false;
+                    "
                   >
                     Update Customer
                   </button>
@@ -242,7 +245,11 @@ export default {
       showDeleteModal: false,
       users: [],
       newUser: { name: "", email: "", phone: "" },
-      currentUser: {}
+      selectedUser: {},
+      formConfig: {
+        "Content-Type": "multipart/form-data",
+        timeout: 10000
+      }
     };
   },
   mounted() {
@@ -252,28 +259,37 @@ export default {
     getAllUsers() {
       axios.get(wpBackendUrls.customer.all) // eslint-disable-line
         .then(response => {
-          if (response.data.error) {
-            this.errorMsg = response.data.message;
-          } else {
+          if (response.status === 200) {
             this.users = response.data;
+          } else {
+            this.errorMsg = "Fetch data Error, status code " + response.status;
           }
         });
     },
     addUser() {
       var formData = this.toFormData(this.newUser);
-      const config = {
-        "Content-Type": "multipart/form-data",
-        timeout: 10000
-      };
-      axios.post(wpBackendUrls.customer.create, formData, config) // eslint-disable-line
-        .then(response => {
-          this.newUser = { name: "", email: "", phone: "" };
 
-          if (response.data.error) {
-            this.errorMsg = response.data.message;
-          } else {
-            this.successMsg = response.data.message;
+      axios.post(wpBackendUrls.customer.create, formData, this.formConfig) // eslint-disable-line
+        .then(response => {
+          if (response.status === 200) {
+            this.successMsg = `New User ${this.newUser.name} create success`;
+            this.newUser = { name: "", email: "", phone: "" };
             this.getAllUsers();
+          } else {
+            this.errorMsg = "Fetch data Error, status code " + response.status;
+          }
+        });
+    },
+    updateUser() {
+      axios.patch(wpBackendUrls.customer.rudBase + "/" + this.selectedUser.id, this.selectedUser) // eslint-disable-line
+        .then(response => {
+          this.selectedUser = {};
+
+          if (response.status === 200) {
+            this.successMsg = `User update success`;
+            this.getAllUsers();
+          } else {
+            this.errorMsg = "Fetch data Error, status code " + response.status;
           }
         });
     },
@@ -282,6 +298,9 @@ export default {
         formData.append(key, obj[key]);
         return formData;
       }, new FormData());
+    },
+    selectUser(user) {
+      this.selectedUser = user;
     }
   }
 };

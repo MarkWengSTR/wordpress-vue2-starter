@@ -31,4 +31,14 @@ class Customer {
 
         return $result;
     }
+
+    static function update_customer($to_update) {
+        global $wpdb;
+
+        $result = $wpdb->replace(
+            'customers', $to_update
+        );
+
+        return $result;
+    }
 }
