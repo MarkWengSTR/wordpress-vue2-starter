@@ -66,7 +66,10 @@
                   <a
                     class="text-danger"
                     href="#"
-                    @click="showDeleteModal = true"
+                    @click="
+                      showDeleteModal = true;
+                      selectUser(user);
+                    "
                   >
                     <font-awesome-icon icon="trash-alt" />
                   </a>
@@ -208,11 +211,14 @@
               <h4 class="text-danger">
                 Are you sure want to Delete this customer?
               </h4>
-              <h5>You are deleting 'Mark'</h5>
+              <h5>You are deleting "{{ selectedUser.name }}"</h5>
               <hr />
               <button
                 class="btn btn-danger btn-lg"
-                @click="showDeleteModal = false"
+                @click="
+                  deleteUser();
+                  showDeleteModal = false;
+                "
               >
                 Yes
               </button>
@@ -287,6 +293,18 @@ export default {
 
           if (response.status === 200) {
             this.successMsg = `User update success`;
+            this.getAllUsers();
+          } else {
+            this.errorMsg = "Fetch data Error, status code " + response.status;
+          }
+        });
+    },
+    deleteUser() {
+      axios.delete(wpBackendUrls.customer.rudBase + "/" + this.selectedUser.id) // eslint-disable-line
+        .then(response => {
+          if (response.status === 200) {
+            this.successMsg = `User ${this.selectedUser.name} has Deleted`;
+            this.selectedUser = {};
             this.getAllUsers();
           } else {
             this.errorMsg = "Fetch data Error, status code " + response.status;

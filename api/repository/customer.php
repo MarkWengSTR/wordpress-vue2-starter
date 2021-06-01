@@ -41,4 +41,14 @@ class Customer {
 
         return $result;
     }
+
+    static function delete_customer($id) {
+        global $wpdb;
+
+        $result = $wpdb->delete(
+            'customers', [ 'ID' => $id ]
+        );
+
+        return $result;
+    }
 }

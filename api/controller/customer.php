@@ -57,6 +57,11 @@ class Customer extends WP_REST_Controller {
                     'permission_callback' => '__return_true',
                     'args'                => [ $this->get_collection_params() ]
                 ],
+                [
+                    'methods'             => \WP_REST_Server::DELETABLE,
+                    'callback'            => [ $this, 'delete_item' ],
+                    'permission_callback' => '__return_true',
+                ],
             ]
         );
     }
@@ -99,5 +104,17 @@ class Customer extends WP_REST_Controller {
         $result = Repository\Customer::update_customer($to_update);
 
         return ( $result == 2 ) ? ( new WP_REST_Response( $to_update, 200 ) ) : ( new WP_Error( 500, __( 'Not Updatable', 'text-domain' ) )) ;
+    }
+
+    public function delete_item ($request) {
+        if ( !isset( $request['id'] ) ) {
+            return rest_ensure_response(
+                ["message" => "id not provide, can not update"]
+            );
+        }
+
+        $result = Repository\Customer::delete_customer($request['id']);
+
+        return ( $result == 1 ) ? ( new WP_REST_Response( $to_update, 200 ) ) : ( new WP_Error( 500, __( 'Not Updatable', 'text-domain' ) )) ;
     }
 }
