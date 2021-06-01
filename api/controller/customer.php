@@ -95,15 +95,14 @@ class Customer extends WP_REST_Controller {
         }
 
         $to_update = [
-            'id' => $request['id'],
             'name' => isset( $request['name'] ) ? sanitize_text_field( $request['name'] ) : '',
             'email' => isset( $request['email'] ) && is_email( $request['email'] ) ? sanitize_text_field( $request['email'] ) : '',
             'phone' => isset( $request['phone'] ) ? sanitize_text_field( $request['phone'] ) : '',
         ]; /* Fail if add more than table columns */
 
-        $result = Repository\Customer::update_customer($to_update);
+        $result = Repository\Customer::update_customer($to_update, $request['id']);
 
-        return ( $result == 2 ) ? ( new WP_REST_Response( $to_update, 200 ) ) : ( new WP_Error( 500, __( 'Not Updatable', 'text-domain' ) )) ;
+        return ( $result == 1 ) ? ( new WP_REST_Response( $to_update, 200 ) ) : ( new WP_Error( 500, __( 'Not Updatable', 'text-domain' ) )) ;
     }
 
     public function delete_item ($request) {

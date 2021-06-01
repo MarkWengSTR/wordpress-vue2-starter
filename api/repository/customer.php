@@ -32,11 +32,11 @@ class Customer {
         return $result;
     }
 
-    static function update_customer($to_update) {
+    static function update_customer($to_update, $id) {
         global $wpdb;
 
-        $result = $wpdb->replace(
-            'customers', $to_update
+        $result = $wpdb->update(
+            'customers', $to_update, ['ID'=>$id]
         );
 
         return $result;
