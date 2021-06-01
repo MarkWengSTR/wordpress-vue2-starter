@@ -13,10 +13,10 @@ class Customer extends WP_REST_Controller {
         $this -> rest_base = 'customer';
     }
 
-    /**
-     * Register customer Routes - Find All Customers
-     */
-    public function index_route() {
+    public function register_routes() {
+        /**
+         * Register customer Routes - Find All Customers
+         */
         register_rest_route(
             $this->namespace,
             '/' . $this->rest_base . 's',
@@ -28,28 +28,15 @@ class Customer extends WP_REST_Controller {
                 ],
             ]
         );
-    }
 
-    public function find_all ($request) {
-        return rest_ensure_response(
-            Repository\Customer::find_all_customers()
-        );
-    }
 
-    /**
-     * Register customer Routes - Get item or create item
-     */
-    public function get_or_create() {
+        /**
+         * Register customer Routes - create item
+         */
         register_rest_route(
             $this->namespace,
             '/' . $this->rest_base,
             [
-                [
-                    'methods'             => \WP_REST_Server::READABLE,
-                    'callback'            => [ $this, 'get_customer' ],
-                    'permission_callback' => '__return_true',
-                    'args'                => [ $this->get_collection_params() ]
-                ],
                 [
                     'methods'             => \WP_REST_Server::CREATABLE,
                     'callback'            => [ $this, 'create_customer' ],
@@ -58,6 +45,35 @@ class Customer extends WP_REST_Controller {
                 ],
             ]
         );
+
+
+        /**
+         * Register customer Routes - update item
+         */
+        register_rest_route(
+            $this->namespace,
+            '/' . $this->rest_base . '/(?P<id>[\d]+)',
+            [
+                [
+                    'methods'             => \WP_REST_Server::READABLE,
+                    'callback'            => [ $this, 'get_customer' ],
+                    'permission_callback' => '__return_true',
+                    'args'                => [ $this->get_collection_params() ]
+                ],
+                [
+                    'methods'             => \WP_REST_Server::EDITABLE,
+                    'callback'            => [ $this, 'update_customer' ],
+                    'permission_callback' => '__return_true',
+                    'args'                => [ $this->get_endpoint_args_for_item_schema(true) ]
+                ],
+            ]
+        );
+    }
+
+    public function find_all ($request) {
+        return rest_ensure_response(
+            Repository\Customer::find_all_customers()
+        );
     }
 
     public function get_customer ($request) {
@@ -65,6 +81,7 @@ class Customer extends WP_REST_Controller {
             Repository\Customer::find_customer_by_id($request['id'])
         );
     }
+
 
     public function create_customer ($request) {
         $to_create = [
@@ -81,6 +98,7 @@ class Customer extends WP_REST_Controller {
             ]
         );
     }
+
 
     public function get_collection_params(){
 
