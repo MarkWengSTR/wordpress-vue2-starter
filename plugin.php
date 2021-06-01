@@ -25,6 +25,16 @@ class Main {
             add_action('admin_menu', [ $this, 'add_admin_menu' ]);
         }
         add_action('admin_enqueue_scripts', [ $this, 'load_scripts' ]);
+        add_filter( 'rest_authentication_errors', function( $result ){ // https://developer.wordpress.org/rest-api/frequently-asked-questions/#require-authentication-for-all-requests
+            if ( ! empty($result) ){
+                return $result;
+            }
+            if ( ! is_user_logged_in() ){
+                return new WP_Error( 401, __( 'Authenticate Error: Not Login User', 'text-domain' )  );
+            }
+            return $result;
+
+        });
     }
 
     public function add_admin_menu() {
