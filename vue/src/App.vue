@@ -36,7 +36,7 @@
           <table class="table table-borderd table-striped">
             <thead>
               <tr class="text-center bg-info text-light">
-                <th>ID</th>
+                <th>#</th>
                 <th>Name</th>
                 <th>Email</th>
                 <th>Phone</th>
@@ -45,8 +45,12 @@
               </tr>
             </thead>
             <tbody>
-              <tr class="text-center" v-for="user in users" :key="user.id">
-                <td>{{ user.id }}</td>
+              <tr
+                class="text-center"
+                v-for="(user, index) in users"
+                :key="user.id"
+              >
+                <td>{{ index + 1 }}</td>
                 <td>{{ user.name }}</td>
                 <td>{{ user.email }}</td>
                 <td>{{ user.phone }}</td>
@@ -265,50 +269,49 @@ export default {
     getAllUsers() {
       axios.get(wpBackendUrls.customer.all) // eslint-disable-line
         .then(response => {
-          if (response.status === 200) {
-            this.users = response.data;
-          } else {
-            this.errorMsg = "Fetch data Error, status code " + response.status;
-          }
+          this.users = response.data;
+        })
+        .catch(err => {
+          this.errorMsg = "something Error";
+          console.log(err);
         });
     },
     addUser() {
       var formData = this.toFormData(this.newUser);
 
       axios.post(wpBackendUrls.customer.create, formData, this.formConfig) // eslint-disable-line
-        .then(response => {
-          if (response.status === 200) {
-            this.successMsg = `New User ${this.newUser.name} create success`;
-            this.newUser = { name: "", email: "", phone: "" };
-            this.getAllUsers();
-          } else {
-            this.errorMsg = "Fetch data Error, status code " + response.status;
-          }
+        .then(() => {
+          this.successMsg = `New User ${this.newUser.name} create success`;
+          this.newUser = { name: "", email: "", phone: "" };
+          this.getAllUsers();
+        })
+        .catch(err => {
+          this.errorMsg = "something Error";
+          console.log(err);
         });
     },
     updateUser() {
       axios.patch(wpBackendUrls.customer.rudBase + "/" + this.selectedUser.id, this.selectedUser) // eslint-disable-line
-        .then(response => {
+        .then(() => {
           this.selectedUser = {};
-
-          if (response.status === 200) {
-            this.successMsg = `User update success`;
-            this.getAllUsers();
-          } else {
-            this.errorMsg = "Fetch data Error, status code " + response.status;
-          }
+          this.successMsg = `User update success`;
+          this.getAllUsers();
+        })
+        .catch(err => {
+          this.errorMsg = "something Error";
+          console.log(err);
         });
     },
     deleteUser() {
       axios.delete(wpBackendUrls.customer.rudBase + "/" + this.selectedUser.id) // eslint-disable-line
-        .then(response => {
-          if (response.status === 200) {
-            this.successMsg = `User ${this.selectedUser.name} has Deleted`;
-            this.selectedUser = {};
-            this.getAllUsers();
-          } else {
-            this.errorMsg = "Fetch data Error, status code " + response.status;
-          }
+        .then(() => {
+          this.successMsg = `User ${this.selectedUser.name} has Deleted`;
+          this.selectedUser = {};
+          this.getAllUsers();
+        })
+        .catch(err => {
+          this.errorMsg = "something Error";
+          console.log(err);
         });
     },
     toFormData(obj) {
